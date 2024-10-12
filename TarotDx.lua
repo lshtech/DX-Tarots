@@ -1058,6 +1058,33 @@ local function setUpDX()
     G.C.SECONDARY_SET['Planet_dx'] = HEX('13afce')
     G.C.SECONDARY_SET['Spectral_dx'] = HEX('4584fa')
     G.C.SECONDARY_SET['Booster_dx'] = HEX('4584fa')
+
+    
+    if SMODS.Mods['aurinko'] then
+        if not AurinkoWhitelist then
+            AurinkoWhitelist = {}
+        end
+
+        AurinkoWhitelist.c_mercury_dx = true
+        AurinkoWhitelist.c_venus_dx = true
+        AurinkoWhitelist.c_earth_dx = true
+        AurinkoWhitelist.c_mars_dx = true
+        AurinkoWhitelist.c_jupiter_dx = true
+        AurinkoWhitelist.c_saturn_dx = true
+        AurinkoWhitelist.c_uranus_dx = true
+        AurinkoWhitelist.c_neptune_dx = true
+        AurinkoWhitelist.c_pluto_dx = true
+        AurinkoWhitelist.c_ceres_dx = true
+        AurinkoWhitelist.c_planet_x_dx = true
+        AurinkoWhitelist.c_eris_dx = true
+
+        AurinkoWhitelist.c_black_hole_dx = true
+        
+        AurinkoWhitelist.c_bunc_Quaoar_dx = true
+        AurinkoWhitelist.c_bunc_Haumea_dx = true
+        AurinkoWhitelist.c_bunc_Sedna_dx = true
+        AurinkoWhitelist.c_bunc_Makemake_dx = true
+    end
 end
 
 -- Should be called after everithing was overrided...
@@ -1253,9 +1280,9 @@ local function overrides()
                 if _type == 'Tarot_dx' or _type == 'Tarot_cu' or _type == 'Planet_dx' or _type == 'Spectral_dx' then
                     if not (G.GAME.used_jokers[v.key] and not next(find_joker("Showman"))) and
                         (v.unlocked ~= false or v.rarity == 4) then
-                        if v.set == 'Planet' then
+                        if G.GAME.hands and v.set == 'Planet' then
                             -- Check if hand is unlocked
-                            if (not v.config.softlock or G.GAME.hands[v.config.hand_type].played > 0) then
+                            if (G.GAME.hands[v.config.hand_type] and G.GAME.hands[v.config.hand_type].played > 0) then
                                 add = true
                             end
                         else
@@ -2351,7 +2378,7 @@ local function overrides()
                     for i=1, #G.hand.cards do
                         G.E_MANAGER:add_event(Event({func = function()
                             local card = G.hand.cards[i]
-                            local suit_prefix = string.sub(card.base.suit, 1, 1)..'_'
+                            local suit_prefix = SMODS.Suits[card.base.suit].card_key..'_'
                             card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
                         return true end }))
                     end
