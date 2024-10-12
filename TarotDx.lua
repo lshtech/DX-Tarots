@@ -2373,13 +2373,11 @@ local function overrides()
                 end
                 if self.ability.name == 'Ouija DX' then
                     local _card = G.hand.highlighted[1]
-                    local rank_data = SMODS.Ranks[_card.base.value]
-                    local rank_suffix = rank_data.card_key
+                    local rank = SMODS.Ranks[_card.base.value]
                     for i=1, #G.hand.cards do
                         G.E_MANAGER:add_event(Event({func = function()
-                            local card = G.hand.cards[i]
-                            local suit_prefix = SMODS.Suits[card.base.suit].card_key..'_'
-                            card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
+                            local _hand_card = G.hand.cards[i]
+                            SMODS.change_base(_hand_card, nil, rank.key)
                         return true end }))
                     end
                 end
