@@ -77,7 +77,7 @@ function CodexArcanum.Alchemical:registerDX()
 end
 
 -- For convenience
-function SMODS.Booster:newDX(name, slug, config, pos, cost, discovered, weight, kind, atlas)
+function SMODS.CABooster:newDX(name, slug, config, pos, cost, discovered, weight, kind, atlas)
 
     name = name .." DX"
     slug = slug .. "_dx"
@@ -85,11 +85,11 @@ function SMODS.Booster:newDX(name, slug, config, pos, cost, discovered, weight, 
     config.type = "_dx"
     atlas = atlas or "ca_booster_dx_atlas"
 
-    return SMODS.Booster:new(name, slug, config, pos, cost, discovered, weight, kind, atlas)
+    return SMODS.CABooster:new(name, slug, config, pos, cost, discovered, weight, kind, atlas)
 end
 
 -- Need a custom register to add DX boosters to the correct CENTER_POOL
-function SMODS.Booster:registerDX()
+function SMODS.CABooster:registerDX()
 
 	CodexArcanum.DXAlchemicals[self.slug] = self
     local id = table_length(G.P_CENTER_POOLS["Booster_dx"]) + 1
@@ -1349,13 +1349,13 @@ function load_dx_alchemical_packs()
       }
     }
   
-    SMODS.Booster:newDX("Alchemy Pack", "alchemy_normal_1", {extra = 3, choose = 1, unique = true}, { x = 0, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Alchemy Pack", "alchemy_normal_2", {extra = 3, choose = 1, unique = true}, { x = 1, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Alchemy Pack", "alchemy_normal_3", {extra = 3, choose = 1, unique = true}, { x = 2, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Alchemy Pack", "alchemy_normal_4", {extra = 3, choose = 1, unique = true}, { x = 3, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Jumbo Alchemy Pack", "alchemy_jumbo_1", {extra = 5, choose = 1, unique = true}, { x = 0, y = 1 }, 8, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Jumbo Alchemy Pack", "alchemy_jumbo_2", {extra = 5, choose = 1, unique = true}, { x = 1, y = 1 }, 8, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
-    SMODS.Booster:newDX("Mega Alchemy Pack", "alchemy_mega_1", {extra = 5, choose = 2, unique = true}, { x = 2, y = 1 }, 10, false, 0.25, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Alchemy Pack", "alchemy_normal_1", {extra = 3, choose = 1, unique = true}, { x = 0, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Alchemy Pack", "alchemy_normal_2", {extra = 3, choose = 1, unique = true}, { x = 1, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Alchemy Pack", "alchemy_normal_3", {extra = 3, choose = 1, unique = true}, { x = 2, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Alchemy Pack", "alchemy_normal_4", {extra = 3, choose = 1, unique = true}, { x = 3, y = 0 }, 6, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Jumbo Alchemy Pack", "alchemy_jumbo_1", {extra = 5, choose = 1, unique = true}, { x = 0, y = 1 }, 8, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Jumbo Alchemy Pack", "alchemy_jumbo_2", {extra = 5, choose = 1, unique = true}, { x = 1, y = 1 }, 8, false, 1, "Celestial", "ca_booster_dx_atlas"):registerDX()
+    SMODS.CABooster:newDX("Mega Alchemy Pack", "alchemy_mega_1", {extra = 5, choose = 2, unique = true}, { x = 2, y = 1 }, 10, false, 0.25, "Celestial", "ca_booster_dx_atlas"):registerDX()
 end
 
 -- Load DX tarots
@@ -1427,10 +1427,22 @@ function CodexArcanum.LoadDX()
     -- DX Sprites
 
     local js_mod = SMODS.findModByID("JeffDeluxeConsumablesPack")
-    SMODS.Sprite:new("alchemical_dx_atlas", js_mod.path, "alchemical_dx_atlas.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("ca_booster_dx_atlas", js_mod.path, "ca_booster_dx_atlas.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("ca_others_dx_atlas", js_mod.path, "ca_others_dx_atlas.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("ca_others_cu_atlas", js_mod.path, "ca_others_cu_atlas.png", 71, 95, "asset_atli"):register();
+    local sprite = SMODS.Sprite:new("alchemical_dx_atlas", js_mod.path, "alchemical_dx_atlas.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("ca_booster_dx_atlas", js_mod.path, "ca_booster_dx_atlas.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("ca_others_dx_atlas", js_mod.path, "ca_others_dx_atlas.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("ca_others_cu_atlas", js_mod.path, "ca_others_cu_atlas.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
     
 	G.P_CENTER_POOLS.Alchemical_dx = {}
 	G.localization.descriptions.Alchemical_dx = {}

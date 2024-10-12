@@ -422,10 +422,22 @@ function LoadBuncoDX()
     sendDebugMessage("Bunco DX Loaded")
     
     local js_mod = SMODS.findModByID("JeffDeluxeConsumablesPack")
-    SMODS.Sprite:new("bunco_tarots_dx", js_mod.path, "Bunco_Tarots_dx.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("bunco_planets_dx", js_mod.path, "Bunco_Planets_dx.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("bunco_spectrals_dx", js_mod.path, "Bunco_Spectrals_dx.png", 71, 95, "asset_atli"):register();
-	SMODS.Sprite:new("bunco_tarots_cu", js_mod.path, "Bunco_Tarots_cu.png", 71, 95, "asset_atli"):register();
+    local sprite = SMODS.Sprite:new("bunco_tarots_dx", js_mod.path, "Bunco_Tarots_dx.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("bunco_planets_dx", js_mod.path, "Bunco_Planets_dx.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("bunco_spectrals_dx", js_mod.path, "Bunco_Spectrals_dx.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
+	sprite = SMODS.Sprite:new("bunco_tarots_cu", js_mod.path, "Bunco_Tarots_cu.png", 71, 95, "asset_atli")
+    if sprite then
+        sprite:register();
+    end
 
     G.localization.misc.labels['sky_bu'] = "Fleurons Buff"
     G.localization.misc.labels['abyss_bu'] = "Halberds Buff"

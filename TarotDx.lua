@@ -1078,7 +1078,7 @@ local function loadCodexArcanumModule()
         local js_mod = SMODS.findModByID("JeffDeluxeConsumablesPack")
 
         -- Load modules
-        assert(load(love.filesystem.read(js_mod.path .. "source/alchemical_dx.lua")))()
+        assert(load(NFS.load(js_mod.path .. "source/alchemical_dx.lua")))()
         
         -- Add new dx stuff
         CodexArcanum.LoadDX()
@@ -1578,6 +1578,9 @@ local function overrides()
             }))
         else    -- Do not overwrite
             level_up_hand_ref(card, hand, instant, amount)
+            if card and card.ability and card.ability.set and card.ability.type == '_dx' then
+                level_up_hand_ref(card, hand, instant, amount)
+            end
         end
     end
 
@@ -3598,7 +3601,7 @@ local function overrides()
             if self.ability.set == 'Tarot' or self.ability.set == 'Planet' or self.ability.set == 'Spectral' or self.ability.set == 'Booster' or self.ability.set == 'Alchemical' then
                 if not G.OVERLAY_MENU then 
                     for k, v in pairs(G.P_CENTERS) do
-                        if v.name == self.ability.name then
+                        if v.name == self.ability.name and G.consumables then
                             local normal_k = k
                             if self.ability.type == '_dx' then
                                 normal_k = string.sub(normal_k, 1, -4)
