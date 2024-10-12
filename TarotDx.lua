@@ -2351,8 +2351,7 @@ local function overrides()
                     for i=1, #G.hand.cards do
                         G.E_MANAGER:add_event(Event({func = function()
                             local card = G.hand.cards[i]
-                            local suit_data = SMODS.Suits[card.base.suit]
-                            local suit_prefix = suit_data.card_key
+                            local suit_prefix = string.sub(card.base.suit, 1, 1)..'_'
                             card:set_base(G.P_CARDS[suit_prefix..rank_suffix])
                         return true end }))
                     end
